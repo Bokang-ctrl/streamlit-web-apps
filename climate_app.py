@@ -4,55 +4,68 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.preprocessing import MinMaxScaler
-#from tensorflow import keras
-#from keras.preprocessing.sequence import TimeseriesGenerator
-#from tensorflow.keras.losses import MeanSquaredError
-#from tensorflow.keras.metrics import RootMeanSquaredError
-#from tensorflow.keras.optimizers import Adam
+from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error
 
 import streamlit as st
 
 
 
-st.title("Data Science in Action")
+# dataset names
+df1 = 'jena_climate_2009_2016.csv'
+train = 'train_predictions.csv'
+test = 'test_predictions.csv'
+validation = 'validation_predictions.csv'
 
-st.write("Hello world... Welcome to my Time Series project 👋")
+# Load datasets
 
-def load_data():
-    return pd.read_csv(r'jena_climate_2009_2016.csv')
+data = pd.read_csv(df1)
+train_preds = pd.read_csv(train)
+test_preds = pd.read_csv(test)
+val_preds = pd.read_csv(validation)
 
-data = load_data()
-st.write(data.columns)
+
 
 # Data Preprocessing
-data['Date Time'] = pd.to_datetime(data['Date Time'], format = "mixed")
-data.set_index('Date Time', inplace = True)
-df = data.resample('H').mean()
-df1 = df.drop(columns = ['p (mbar)', 'wv (m/s)', 'max. wv (m/s)', 'wd (deg)'])
+
+df = data.copy()
+df['Date Time'] = pd.to_datetime(df['Date Time'], format = "mixed")
+df.set_index('Date Time', inplace = True)
+df1 = data.resample('H').mean()
+df2 = df1.drop(columns = ['p (mbar)', 'wv (m/s)', 'max. wv (m/s)', 'wd (deg)'])
 
 
-train_df = df1[df1.index < '2014-09-24 18:00:00']
-test_df = df1[df1.index > '2016-10-28 11:00:00']               # I can make this the test dataframe
+# What I need to do is to take df2 target (T degC) and split it into Train Test and Validation splits so that I can run mean squared error and perfrom evaluation
+y_true_1 = df2.loc[df2.index < '2014-09-24 18:00:00']['T (degC)']
+y_true_test = df2[df2.index > '2016-10-28 11:00:00']['T (degC)']                # Test Target is done and ready
 
-X = test_df.drop(columns = 'T (degC)')
-y = test_df['T (degC)']
+val_len = round(len(df2) * 0.3)
 
-scaler = MinMaxScaler()
-
-X_scaled = scaler.fit_transform(X)
-
+y_true_train = y_true_1[:-val_len]
+y_true_validation = y_true_1[-val_len:]
 
 
-n_input = 10
+# -------------------  Web Page
+st.title("Data Science in Action \n")
 
-def create_sequences(data, n_input):
-    sequences = []
-    for i in range(len(data) - n_input):
-        sequences.append(data[i:i + n_input])
-    return np.array(sequences)
+st.write("#### Hello world👋")
 
-test_sequences = create_sequences(X_scaled, n_input)
+st.write("Welcome to my Time Series Analysis project. Here I demonstrate temperature forecasting with LSTM. An example of a Recurrent Neural Network.")
 
-predictions = model.predict(test_sequences)
+st.write("\n Below is how the climate dataset looks like.")
 
+
+
+st.write(data.head())
+st.write(train_preds.head())
+st.write(test_preds.head())
+st.write(val_preds.head())
+
+
+ 
+ # Evaluation metric 
+def get_mse(y_true, preds):
+    return mean_squared_error(y_true, preds)
+
+# Here I will test if the function works well
+st.write(get_mse(y_true_train, train_preds['Predicted T (degC)']))
 
