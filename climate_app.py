@@ -30,18 +30,25 @@ val_preds = pd.read_csv(validation)
 df = data.copy()
 df['Date Time'] = pd.to_datetime(df['Date Time'], format = "mixed")
 df.set_index('Date Time', inplace = True)
-df1 = data.resample('H').mean()
+df1 = df.resample('H').mean()
 df2 = df1.drop(columns = ['p (mbar)', 'wv (m/s)', 'max. wv (m/s)', 'wd (deg)'])
 
 
+
+
 # What I need to do is to take df2 target (T degC) and split it into Train Test and Validation splits so that I can run mean squared error and perfrom evaluation
-y_true_1 = df2.loc[df2.index < '2014-09-24 18:00:00']['T (degC)']
-y_true_test = df2[df2.index > '2016-10-28 11:00:00']['T (degC)']                # Test Target is done and ready
+train_val_temps = df2.loc[df2.index < '2014-09-24 18:00:00']['T (degC)']               # datetime before null values
+
+# Train
+train_len = round(len(df2) * 0.7)
+temps_of_train = train_val_temps[10 :train_len]
+
+temps_of_test = df2[df2.index > '2016-10-28 11:00:00']['T (degC)']                # datetime after null values                 ***# Test Target is done and ready
+temps_of_test = temps_of_test[10 :]
+
 
 val_len = round(len(df2) * 0.3)
-
-y_true_train = y_true_1[:-val_len]
-y_true_validation = y_true_1[-val_len:]
+temps_of_validation = train_val_temps[-val_len + 10:]
 
 
 # -------------------  Web Page
@@ -64,8 +71,10 @@ st.write(val_preds.head())
  
  # Evaluation metric 
 def get_mse(y_true, preds):
-    return mean_squared_error(y_true, preds)
+    return round(mean_squared_error(y_true, preds), 3)
 
 # Here I will test if the function works well
-st.write(get_mse(y_true_train, train_preds['Predicted T (degC)']))
+st.write("The Average Squared Error of the train predictions is  ", get_mse(temps_of_train, train_preds['Predicted T (degC)']))
+st.write("The Average Squared Error of the Validation predictions is  ", get_mse(temps_of_validation, val_preds['Predicted T (degC)']))
+st.write("The Average Squared Error of the Test predictions is  ", get_mse(temps_of_test, test_preds['Predicted T (degC)']))
 
