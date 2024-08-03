@@ -62,117 +62,53 @@ temps_of_validation = train_val_temps[-val_len + 10:]
 # -------------------  Web Page
 st.title("Data Science in Action \n")
 
-st.write("#### Hello world 👋")
-
-st.write("Welcome to my Time Series Analysis page. Here I demonstrate temperature forecasting with LSTM model. An example of a Recurrent Neural Network.")
-
-st.write("\nBelow is how the climate dataset looks like. It will be split into training, validation, test sets; preprocessed and analyzed. Then the LSTM model will be trained on the data to then make predictions.")
 
 
-
-st.write(data.head())
-
-
- 
- # Evaluation metric 
+ # Evaluation function in MSE 
 def get_mse(y_true, preds):
     return round(mean_squared_error(y_true, preds), 3)
 
 
-st.write("After training the model on the Training set, the evaluation will be performed on the validation and the Test sets, using the Mean Squared Error.")
 
-
-# Here I will test if the function works well
-#st.write("The Average Squared Error of the train predictions is  ", get_mse(temps_of_train, train_preds['Predicted T (degC)']))
-st.write("The Mean Squared Error of the Validation predictions is  ", get_mse(temps_of_validation, val_preds['Predicted T (degC)']))
-st.write("The Mean Squared Error of the Test predictions is  ", get_mse(temps_of_test, test_preds['Predicted T (degC)']))
-
-
-
-# filter by years for the plots
-train_year = st.sidebar.selectbox('Train Year', ["All", "2009", "2010", "2011", "2012", "2013"])
-val_year = st.sidebar.selectbox('Validation Year', ["All", "2013", "2014"])
-
-
-
-st.write("\n, \n")
-
-
-# ------------------------------------------------------
 #    PLOTS
 
 
-#  Prepare the Train data for plotting
-train_plot_df = pd.DataFrame({'True Temperature' : temps_of_train, 'Predicted Temperature' : train_preds['Predicted T (degC)'] })
-train_plot_df['Date'] = pd.to_datetime(train_plot_df.index, format = 'mixed')
+predictions_to_show = st.sidebar.selectbox('Predictions sample', ["None", "Train", "Validation", "Test"])
 
-if train_year != "All":
-    train_plot_df_1 = train_plot_df[train_plot_df.Date.dt.year == int(train_year)]
+if predictions_to_show == 'None':
+
+    st.write("#### Hello world...    👋")
+
+    st.write("Welcome to my Time Series Analysis webpage. Here I demonstrate temperature forecasting with LSTM model. An example of a Recurrent Neural Network.")
+
+    st.write("\nBelow is how the climate dataset looks like. It will be split into training, validation and test samples. Afterwards, it will be preprocessed and analyzed. Then the LSTM model will be trained on the data to finally make predictions.")
+
+
+
+    st.write(data.head())
+    st.write(f'The shape of the data is {data.shape}')
+    st.write('\n')
+
+
+
+#  PLOT THE TEMPERATURE ON LANDING PAGE
+
+    landing_page_T_plot = df2.resample('d').mean()
 
     fig = go.Figure()
 
-    # Plot the true temperature
+    # Plot the data temperature
     fig.add_trace(go.Scatter(
-        x = train_plot_df_1.index,
-        y = train_plot_df_1 ['True Temperature'],
+        x = landing_page_T_plot.index,
+        y = landing_page_T_plot['T (degC)'],
         mode='lines',
-        name='True Temperature',
+        name='Temperature (degC)',
         line=dict(color='blue') 
-    ))
-
-    # Plot the predicted temperature
-    fig.add_trace(go.Scatter(
-        x = train_plot_df_1['Date'],
-        y = train_plot_df_1['Predicted Temperature'],
-        mode='lines',
-        name='Predicted Temperature',
-        line=dict(color='orange') 
     ))
 
     # Set the layout
     fig.update_layout(
-        title='Model Performance on Test sample',
-        xaxis_title='Datetime',
-        yaxis_title='T (degC)',
-        legend_title_text='',
-        font=dict(
-            family="Courier New, monospace",
-            size=14,
-            color="RebeccaPurple"
-                ),  width = 1900, 
-                    height = 600  
-
-            )
-
-    # Apply tight layout
-    fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-    # Display the plot in Streamlit
-    st.plotly_chart(fig,  use_container_width=False)
-else:
-    fig = go.Figure()
-
-    # Plot the true temperature
-    fig.add_trace(go.Scatter(
-        x = train_plot_df.index,
-        y = train_plot_df['True Temperature'],
-        mode='lines',
-        name='True Temperature',
-        line=dict(color='blue') 
-    ))
-
-    # Plot the predicted temperature
-    fig.add_trace(go.Scatter(
-        x = train_plot_df.index,
-        y = train_plot_df['Predicted Temperature'],
-        mode='lines',
-        name='Predicted Temperature',
-        line=dict(color='orange') 
-    ))
-
-    # Set the layout
-    fig.update_layout(
-        title='Model Performance on Test sample',
+        title='Average Temperature (2009 - 2016)',
         xaxis_title='Datetime',
         yaxis_title='T (degC)',
         legend_title_text='',
@@ -192,108 +128,269 @@ else:
     st.plotly_chart(fig,  use_container_width=False)
 
 
-st.write("\n, \n")
 
 
 
 
+#------------------------------     OTHER PAGES      ----------------------------------
 
-# # Create the figure and axis
-# fig, ax = plt.subplots(figsize=(13, 7))
+                # ***       TRAIN PAGE
 
-# # Plot the data on the same axis
-# ax.plot(train_plot_df['True Temperature'], label='True Temperature')
-# ax.plot(train_plot_df['Predicted Temperature'], label='Predicted Temperature')
+elif predictions_to_show == 'Train':
 
-# # Add labels and legend
-# ax.set_xlabel('Datetime')
-# ax.set_ylabel('T (degC)')
-# ax.set_title('Model Performance on Train sample')
-# ax.legend()
-
-# # Display the plot in Streamlit
-# st.pyplot(fig)
+# filter by years for the plots
+    train_year = st.sidebar.selectbox('Year', ["All", "2009", "2010", "2011", "2012", "2013"])
 
 
-# st.write("\n, \n")
+    
+    st.write("After training the model on the training set, the evaluation will be performed on all the Train, Validation, and the Test sets using the Mean Squared Error. We do keep in mind however, that the predictions will be much better on the training set because the model has already seen the data.")
 
 
 
-        # -------------------
+    st.write("The Mean Squared Error of the train predictions is  ", get_mse(temps_of_train, train_preds['Predicted T (degC)']))
+
+
+
+
+    st.write("\n \n")
+
+
+    # ------------------------------------------------------
+
+
+
+    #  Prepare the Train data for plotting
+    train_plot_df = pd.DataFrame({'True Temperature' : temps_of_train, 'Predicted Temperature' : train_preds['Predicted T (degC)'] })
+    train_plot_df['Date'] = pd.to_datetime(train_plot_df.index, format = 'mixed')
+
+    if train_year != "All":
+        train_plot_df_1 = train_plot_df[train_plot_df.Date.dt.year == int(train_year)]
+
+        fig = go.Figure()
+
+        # Plot the true temperature
+        fig.add_trace(go.Scatter(
+            x = train_plot_df_1.index,
+            y = train_plot_df_1['True Temperature'],
+            mode='lines',
+            name='True Temperature',
+            line=dict(color='blue') 
+        ))
+
+        # Plot the predicted temperature
+        fig.add_trace(go.Scatter(
+            x = train_plot_df_1['Date'],
+            y = train_plot_df_1['Predicted Temperature'],
+            mode='lines',
+            name='Predicted Temperature',
+            line=dict(color='red') 
+        ))
+
+        # Set the layout
+        fig.update_layout(
+            title='Model Performance on Train sample',
+            xaxis_title='Datetime',
+            yaxis_title='T (degC)',
+            legend_title_text='',
+            font=dict(
+                family="Courier New, monospace",
+                size=14,
+                color="RebeccaPurple"
+                    ),  width = 1900, 
+                        height = 600  
+
+                )
+
+        # Apply tight layout
+        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
+
+        # Display the plot in Streamlit
+        st.plotly_chart(fig,  use_container_width=False)
+    else:
+        fig = go.Figure()
+
+        # Plot the true temperature
+        fig.add_trace(go.Scatter(
+            x = train_plot_df.index,
+            y = train_plot_df['True Temperature'],
+            mode='lines',
+            name='True Temperature',
+            line=dict(color='blue') 
+        ))
+
+        # Plot the predicted temperature
+        fig.add_trace(go.Scatter(
+            x = train_plot_df.index,
+            y = train_plot_df['Predicted Temperature'],
+            mode='lines',
+            name='Predicted Temperature',
+            line=dict(color='red') 
+        ))
+
+        # Set the layout
+        fig.update_layout(
+            title='Model Performance on Train sample',
+            xaxis_title='Datetime',
+            yaxis_title='T (degC)',
+            legend_title_text='',
+            font=dict(
+                family="Courier New, monospace",
+                size=14,
+                color="RebeccaPurple"
+                    ),  width = 1900, 
+                        height = 600  
+
+                )
+
+        # Apply tight layout
+        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
+
+        # Display the plot in Streamlit
+        st.plotly_chart(fig,  use_container_width=False)
+
+
+
+
+elif predictions_to_show == 'Validation':
+
 
 
 # VALIDATION
 
-st.write("Now that we have evaluated the Train predicions, the validation sample will also be evaluated and we will give us a better understanding of how well the model performs relative to the train predictions.")
+    st.write("Now that we have evaluated the Train predictions, the validation sample will also be evaluated and it will give us a better understanding of how well the model performs in relation to the train predictions.")
 
 
-#  Prepare the Validation data for plotting
-val_plot_df = pd.DataFrame({'True Temperature' : temps_of_validation, 'Predicted Temperature' : val_preds['Predicted T (degC)'] })
-val_plot_df['Date'] = pd.to_datetime(val_plot_df.index, format = 'mixed')
 
-if val_year != "All":
-    val_plot_df_1 = val_plot_df[val_plot_df.Date.dt.year == int(val_year)]
+    st.write("The Mean Squared Error of the Validation predictions is  ", get_mse(temps_of_validation, val_preds['Predicted T (degC)']))
+   
+
+
+    #  Prepare the Validation data for plotting
+    val_plot_df = pd.DataFrame({'True Temperature' : temps_of_validation, 'Predicted Temperature' : val_preds['Predicted T (degC)'] })
+    val_plot_df['Date'] = pd.to_datetime(val_plot_df.index, format = 'mixed')
+
+    val_year = st.sidebar.selectbox('Year', ["All", "2013", "2014"])
+
+
+    if val_year != "All":
+        val_plot_df_1 = val_plot_df[val_plot_df.Date.dt.year == int(val_year)]
+        
     
- 
-    fig = go.Figure()
+        fig = go.Figure()
 
-    # Plot the true temperature
-    fig.add_trace(go.Scatter(
-        x = val_plot_df_1.index,
-        y = val_plot_df_1['True Temperature'],
-        mode='lines',
-        name='True Temperature',
-        line=dict(color='blue') 
-    ))
+        # Plot the true temperature
+        fig.add_trace(go.Scatter(
+            x = val_plot_df_1.index,
+            y = val_plot_df_1['True Temperature'],
+            mode='lines',
+            name='True Temperature',
+            line=dict(color='blue') 
+        ))
 
-    # Plot the predicted temperature
-    fig.add_trace(go.Scatter(
-        x = val_plot_df_1.index,
-        y = val_plot_df_1['Predicted Temperature'],
-        mode='lines',
-        name='Predicted Temperature',
-        line=dict(color='red') 
-    ))
+        # Plot the predicted temperature
+        fig.add_trace(go.Scatter(
+            x = val_plot_df_1.index,
+            y = val_plot_df_1['Predicted Temperature'],
+            mode='lines',
+            name='Predicted Temperature',
+            line=dict(color='red') 
+        ))
 
-    # Set the layout
-    fig.update_layout(
-        title='Model Performance on Validation sample',
-        xaxis_title='Datetime',
-        yaxis_title='T (degC)',
-        legend_title_text='',
-        font=dict(
-            family="Courier New, monospace",
-            size=14,
-            color="RebeccaPurple"
-                ),  width = 1900, 
-                    height = 600  
+        # Set the layout
+        fig.update_layout(
+            title='Model Performance on Validation sample',
+            xaxis_title='Datetime',
+            yaxis_title='T (degC)',
+            legend_title_text='',
+            font=dict(
+                family="Courier New, monospace",
+                size=14,
+                color="RebeccaPurple"
+                    ),  width = 1900, 
+                        height = 600  
 
-            )
+                )
 
-    # Apply tight layout
-    fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
+        # Apply tight layout
+        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
 
-    # Display the plot in Streamlit
-    st.plotly_chart(fig,  use_container_width=False)
+        # Display the plot in Streamlit
+        st.plotly_chart(fig,  use_container_width=False)
+    else:
+        fig = go.Figure()
+
+        # Plot the true temperature
+        fig.add_trace(go.Scatter(
+            x = val_plot_df['Date'],
+            y = val_plot_df ['True Temperature'],
+            mode='lines',
+            name='True Temperature',
+            line=dict(color='blue') 
+        ))
+
+        # Plot the predicted temperature
+        fig.add_trace(go.Scatter(
+            x = val_plot_df.index,
+            y = val_plot_df['Predicted Temperature'],
+            mode='lines',
+            name='Predicted Temperature',
+            line=dict(color='red') 
+        ))
+
+        # Set the layout
+        fig.update_layout(
+            title='Model Performance on Validation sample',
+            xaxis_title='Datetime',
+            yaxis_title='T (degC)',
+            legend_title_text='',
+            font=dict(
+                family="Courier New, monospace",
+                size=14,
+                color="RebeccaPurple"
+                    ),  width = 1900, 
+                        height = 600  
+
+                )
+
+        # Apply tight layout
+        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
+
+        # Display the plot in Streamlit
+        st.plotly_chart(fig,  use_container_width=False)
+
+
+
 else:
+# TEST
+
+    st.write("Now to see our model performance on data it has not seen, we will evaluate the Test predictions against true Test values.")
+    st.write("The Mean Squared Error of the Test predictions is  ", get_mse(temps_of_test, test_preds['Predicted T (degC)']))
+
+
+
+    #  Prepare the Test data for plotting
+    test_plot_df = pd.DataFrame({'True Temperature' : temps_of_test, 'Predicted Temperature' : test_preds['Predicted T (degC)'] })
+
+
+    # Create the figure and axis
     fig = go.Figure()
 
     # Plot the true temperature
     fig.add_trace(go.Scatter(
-        x = val_plot_df['Date'],
-        y = val_plot_df ['True Temperature'],
+        x=test_plot_df.index,
+        y=test_plot_df['True Temperature'],
         mode='lines',
         name='True Temperature',
-        line=dict(color='blue') 
+        line=dict(color='blue')  
     ))
 
     # Plot the predicted temperature
     fig.add_trace(go.Scatter(
-        x = val_plot_df.index,
-        y = val_plot_df['Predicted Temperature'],
+        x=test_plot_df.index,
+        y=test_plot_df['Predicted Temperature'],
         mode='lines',
         name='Predicted Temperature',
-        line=dict(color='orange') 
+        line=dict(color='red')  
     ))
 
     # Set the layout
@@ -303,76 +400,18 @@ else:
         yaxis_title='T (degC)',
         legend_title_text='',
         font=dict(
-            family="Courier New, monospace",
-            size=14,
-            color="RebeccaPurple"
-                ),  width = 1900, 
-                    height = 600  
-
-            )
+                    family="Courier New, monospace",
+                    size=14,
+                    color="RebeccaPurple"
+                ), 
+        height = 600,
+        width = 1600,                          # Run it !!!
+    )
 
     # Apply tight layout
     fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
 
     # Display the plot in Streamlit
-    st.plotly_chart(fig,  use_container_width=False)
-
-
-
-st.write("\n, \n")
-
-#--------------------
-
-
-# TEST
-
-st.write("Now to see our model performance on data it has not seen, we will evaluate the Test predictions against true Test values.")
-
-
-#  Prepare the Test data for plotting
-test_plot_df = pd.DataFrame({'True Temperature' : temps_of_test, 'Predicted Temperature' : test_preds['Predicted T (degC)'] })
-
-
-# Create the figure and axis
-fig = go.Figure()
-
-# Plot the true temperature
-fig.add_trace(go.Scatter(
-    x=test_plot_df.index,
-    y=test_plot_df['True Temperature'],
-    mode='lines',
-    name='True Temperature',
-    line=dict(color='blue')  
-))
-
-# Plot the predicted temperature
-fig.add_trace(go.Scatter(
-    x=test_plot_df.index,
-    y=test_plot_df['Predicted Temperature'],
-    mode='lines',
-    name='Predicted Temperature',
-    line=dict(color='red')  
-))
-
-# Set the layout
-fig.update_layout(
-    title='Model Performance on Test sample',
-    xaxis_title='Datetime',
-    yaxis_title='T (degC)',
-    legend_title_text='',
-    font=dict(
-                family="Courier New, monospace",
-                size=14,
-                color="RebeccaPurple"
-             ), 
-    height = 600,
-    width = 1600,                          # Run it !!!
-)
-
-# Apply tight layout
-fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-# Display the plot in Streamlit
-st.plotly_chart(fig, use_container_width = False)
+    st.plotly_chart(fig, use_container_width = False)
 
 
