@@ -73,7 +73,10 @@ def get_mse(y_true, preds):
 #    PLOTS
 
 
+st.sidebar.title("Filters")
+
 predictions_to_show = st.sidebar.selectbox('Predictions sample', ["None", "Train", "Validation", "Test"])
+quarter_to_plot = st.sidebar.selectbox('Quarter', ['All', 'First', 'Second', 'Third', 'Fourth'])
 
 if predictions_to_show == 'None':
 
@@ -95,38 +98,10 @@ if predictions_to_show == 'None':
 
     landing_page_T_plot = df2.resample('d').mean()
 
-    fig = go.Figure()
+    from Plot_functions import all_samples_plot_quarter
 
-    # Plot the data temperature
-    fig.add_trace(go.Scatter(
-        x = landing_page_T_plot.index,
-        y = landing_page_T_plot['T (degC)'],
-        mode='lines',
-        name='Temperature (degC)',
-        line=dict(color='blue') 
-    ))
 
-    # Set the layout
-    fig.update_layout(
-        title='Average Temperature (2009 - 2016)',
-        xaxis_title='Datetime',
-        yaxis_title='T (degC)',
-        legend_title_text='',
-        font=dict(
-            family="Courier New, monospace",
-            size=14,
-            color="RebeccaPurple"
-                ),  width = 1900, 
-                    height = 600  
-
-            )
-
-    # Apply tight layout
-    fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-    # Display the plot in Streamlit
-    st.plotly_chart(fig,  use_container_width=False)
-
+    all_samples_plot_quarter(quarter_to_plot, landing_page_T_plot)
 
 
 
@@ -140,6 +115,7 @@ elif predictions_to_show == 'Train':
 
 # filter by years for the plots
     train_year = st.sidebar.selectbox('Year', ["All", "2009", "2010", "2011", "2012", "2013"])
+
 
 
     
@@ -166,89 +142,16 @@ elif predictions_to_show == 'Train':
     if train_year != "All":
         train_plot_df_1 = train_plot_df[train_plot_df.Date.dt.year == int(train_year)]
 
-        fig = go.Figure()
+        from Plot_functions import train_plot_quarter
 
-        # Plot the true temperature
-        fig.add_trace(go.Scatter(
-            x = train_plot_df_1.index,
-            y = train_plot_df_1['True Temperature'],
-            mode='lines',
-            name='True Temperature',
-            line=dict(color='blue') 
-        ))
+        train_plot_quarter(quarter_to_plot, train_plot_df_1)
 
-        # Plot the predicted temperature
-        fig.add_trace(go.Scatter(
-            x = train_plot_df_1['Date'],
-            y = train_plot_df_1['Predicted Temperature'],
-            mode='lines',
-            name='Predicted Temperature',
-            line=dict(color='red') 
-        ))
 
-        # Set the layout
-        fig.update_layout(
-            title='Model Performance on Train sample',
-            xaxis_title='Datetime',
-            yaxis_title='T (degC)',
-            legend_title_text='',
-            font=dict(
-                family="Courier New, monospace",
-                size=14,
-                color="RebeccaPurple"
-                    ),  width = 1900, 
-                        height = 600  
 
-                )
-
-        # Apply tight layout
-        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-        # Display the plot in Streamlit
-        st.plotly_chart(fig,  use_container_width=False)
     else:
-        fig = go.Figure()
+        from Plot_functions import train_plot_quarter
 
-        # Plot the true temperature
-        fig.add_trace(go.Scatter(
-            x = train_plot_df.index,
-            y = train_plot_df['True Temperature'],
-            mode='lines',
-            name='True Temperature',
-            line=dict(color='blue') 
-        ))
-
-        # Plot the predicted temperature
-        fig.add_trace(go.Scatter(
-            x = train_plot_df.index,
-            y = train_plot_df['Predicted Temperature'],
-            mode='lines',
-            name='Predicted Temperature',
-            line=dict(color='red') 
-        ))
-
-        # Set the layout
-        fig.update_layout(
-            title='Model Performance on Train sample',
-            xaxis_title='Datetime',
-            yaxis_title='T (degC)',
-            legend_title_text='',
-            font=dict(
-                family="Courier New, monospace",
-                size=14,
-                color="RebeccaPurple"
-                    ),  width = 1900, 
-                        height = 600  
-
-                )
-
-        # Apply tight layout
-        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-        # Display the plot in Streamlit
-        st.plotly_chart(fig,  use_container_width=False)
-
-
+        train_plot_quarter(quarter_to_plot, train_plot_df)
 
 
 elif predictions_to_show == 'Validation':
@@ -256,6 +159,7 @@ elif predictions_to_show == 'Validation':
 
 
 # VALIDATION
+    from Plot_functions import validation_plot_quarter
 
     st.write("Now that we have evaluated the Train predictions, the validation sample will also be evaluated and it will give us a better understanding of how well the model performs in relation to the train predictions.")
 
@@ -275,89 +179,13 @@ elif predictions_to_show == 'Validation':
     if val_year != "All":
         val_plot_df_1 = val_plot_df[val_plot_df.Date.dt.year == int(val_year)]
         
-    
-        fig = go.Figure()
 
-        # Plot the true temperature
-        fig.add_trace(go.Scatter(
-            x = val_plot_df_1.index,
-            y = val_plot_df_1['True Temperature'],
-            mode='lines',
-            name='True Temperature',
-            line=dict(color='blue') 
-        ))
+        validation_plot_quarter(quarter_to_plot, val_plot_df_1)
 
-        # Plot the predicted temperature
-        fig.add_trace(go.Scatter(
-            x = val_plot_df_1.index,
-            y = val_plot_df_1['Predicted Temperature'],
-            mode='lines',
-            name='Predicted Temperature',
-            line=dict(color='red') 
-        ))
 
-        # Set the layout
-        fig.update_layout(
-            title='Model Performance on Validation sample',
-            xaxis_title='Datetime',
-            yaxis_title='T (degC)',
-            legend_title_text='',
-            font=dict(
-                family="Courier New, monospace",
-                size=14,
-                color="RebeccaPurple"
-                    ),  width = 1900, 
-                        height = 600  
 
-                )
-
-        # Apply tight layout
-        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-        # Display the plot in Streamlit
-        st.plotly_chart(fig,  use_container_width=False)
-    else:
-        fig = go.Figure()
-
-        # Plot the true temperature
-        fig.add_trace(go.Scatter(
-            x = val_plot_df['Date'],
-            y = val_plot_df ['True Temperature'],
-            mode='lines',
-            name='True Temperature',
-            line=dict(color='blue') 
-        ))
-
-        # Plot the predicted temperature
-        fig.add_trace(go.Scatter(
-            x = val_plot_df.index,
-            y = val_plot_df['Predicted Temperature'],
-            mode='lines',
-            name='Predicted Temperature',
-            line=dict(color='red') 
-        ))
-
-        # Set the layout
-        fig.update_layout(
-            title='Model Performance on Validation sample',
-            xaxis_title='Datetime',
-            yaxis_title='T (degC)',
-            legend_title_text='',
-            font=dict(
-                family="Courier New, monospace",
-                size=14,
-                color="RebeccaPurple"
-                    ),  width = 1900, 
-                        height = 600  
-
-                )
-
-        # Apply tight layout
-        fig.update_layout(margin=dict(l=20, r=20, t=30, b=20))
-
-        # Display the plot in Streamlit
-        st.plotly_chart(fig,  use_container_width=False)
-
+    else:       
+        validation_plot_quarter(quarter_to_plot, val_plot_df)
 
 
 else:
@@ -405,7 +233,7 @@ else:
                     color="RebeccaPurple"
                 ), 
         height = 600,
-        width = 1600,                          # Run it !!!
+        width = 1600,                         
     )
 
     # Apply tight layout

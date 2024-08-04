@@ -58,13 +58,75 @@ y_test = test_df['T (degC)'][10: ]
 #%%
 
 train_preds['Date'] = pd.to_datetime(train_preds['Date'], format = 'mixed')
-
-val_preds['Date'].dt.year.unique()
-
+val_preds['Date'] = pd.to_datetime(val_preds['Date'], format = 'mixed')
 
 
+train_uniq_years = train_preds['Date'].dt.year.unique()
+val_uniq_years = val_preds['Date'].dt.year.unique()
 
 
+# Quarter plots function
+
+def plot_quarter(quarter, dataframe):
+    q_len = 0.25
+    
+    if quarter == 'First':
+        q_length = round(len(dataframe) * q_len)
+        actual_quarter_df = dataframe.iloc[:q_length]
+        
+        plt.figure(figsize = (12, 7))
+    
+        # Plot the data temperature
+        sns.lineplot(data = actual_quarter_df, x = 'Date', y = 'Predicted T (degC)')
+        plt.title('Temperature Plot')
+        plt.show()
+        
+        
+    
+    elif quarter == 'Second':
+        q_length = round(len(dataframe) * q_len)
+        actual_quarter_df = dataframe.iloc[q_length : q_length * 2]
+        
+        plt.figure(figsize = (12, 7))
+    
+        # Plot the data temperature
+        sns.lineplot(data = actual_quarter_df, x = 'Date', y = 'Predicted T (degC)')
+        plt.title('Temperature Plot')
+        plt.show()
 
 
+    elif quarter == 'Third':
+        q_length = round(len(dataframe) * q_len)
+        actual_quarter_df = dataframe.iloc[q_length * 2 : q_length * 3]
+        
+    
+    # Plot the data temperature
+        plt.figure(figsize = (12, 7))
+    
+        # Plot the data temperature
+        sns.lineplot(data = actual_quarter_df, x = 'Date', y = 'Predicted T (degC)')
+        plt.title('Temperature Plot')
+        plt.show()
+
+    else:
+        q_length = round(len(dataframe) * q_len)
+        actual_quarter_df = dataframe.iloc[q_length * 3 : ]
+        
+     # Plot the data temperature
+        plt.figure(figsize = (12, 7))
+     
+         # Plot the data temperature
+        sns.lineplot(data = actual_quarter_df, x = 'Date', y = 'Predicted T (degC)')
+        plt.title('Temperature Plot')
+        plt.show()
+        
+    
+
+    
+plot_quarter('Fourth', val_preds)
+    
+    
+    
+    
+    
 
