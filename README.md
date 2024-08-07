@@ -12,3 +12,5 @@ The main components of this project are:
 The purpose of this project is to create an engaging and informative web application that allows users to interact with the Jena climate data. By pre-computing the predictions and storing them in CSV files, we can ensure a responsive and efficient user experience, without the need to train or generate predictions within the web application itself.
 
 If you have any questions or need assistance, feel free to reach out. I'm always happy to help fellow developers and enthusiasts in their data exploration endeavors.
+
+This project is licensed under the Apache License, Version 2.0
