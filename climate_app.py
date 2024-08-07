@@ -11,19 +11,18 @@ import plotly.graph_objects as go
 
 
 
-# dataset names
-df1 = 'jena_climate_2009_2016.csv'
-train = 'train_predictions.csv'
-test = 'test_predictions.csv'
-validation = 'validation_predictions.csv'
+@st.cache_data
+def load_datasets():
+    # Load the datasets
+    data = pd.read_csv('jena_climate_2009_2016.csv')
+    train_preds = pd.read_csv('train_predictions.csv')
+    test_preds = pd.read_csv('test_predictions.csv')
+    val_preds = pd.read_csv('validation_predictions.csv')
 
-# Load datasets
+    return data, train_preds, test_preds, val_preds
 
-data = pd.read_csv(df1)
-train_preds = pd.read_csv(train)
-test_preds = pd.read_csv(test)
-val_preds = pd.read_csv(validation)
-
+#Load the datasets using the cached function
+data, train_preds, test_preds, val_preds = load_datasets()
 
 
 # Data Preprocessing
@@ -37,8 +36,13 @@ df2 = df1.drop(columns = ['p (mbar)', 'wv (m/s)', 'max. wv (m/s)', 'wd (deg)'])
 
 # set the date column as index
 train_preds.set_index('Date', inplace = True)
+train_preds.index = pd.to_datetime(train_preds.index)
+
 test_preds.set_index('Date', inplace = True)
+test_preds.index = pd.to_datetime(test_preds.index)
+
 val_preds.set_index('Date', inplace = True)
+val_preds.index = pd.to_datetime(val_preds.index)
 
 
 
@@ -82,9 +86,9 @@ if predictions_to_show == 'None':
 
     st.write("#### Hello world...    👋")
 
-    st.write("Welcome to my Time Series Analysis webpage. Here I demonstrate temperature forecasting with LSTM model. An example of a Recurrent Neural Network.")
+    st.write("Welcome to my Time Series Analysis webpage. Here I demonstrate temperature forecasting with the LSTM model (Long Short-Term Memory), an example of a Recurrent Neural Network. The dataset used is the Jena Climate dataset provided by Kaggle.")
 
-    st.write("\nBelow is how the climate dataset looks like. It will be split into training, validation and test samples. Afterwards, it will be preprocessed and analyzed. Then the LSTM model will be trained on the data to finally make predictions.")
+    st.write("\nBelow is how the dataset looks like. It will be Analyzed and split into training, validation, & test samples. Afterwards, it will be preprocessed then the LSTM model will be trained on the data to finally make predictions.")
 
 
 
@@ -119,7 +123,7 @@ elif predictions_to_show == 'Train':
 
 
     
-    st.write("After training the model on the training set, the evaluation will be performed on all the Train, Validation, and the Test sets using the Mean Squared Error. We do keep in mind however, that the predictions will be much better on the training set because the model has already seen the data.")
+    st.write("After training the model on the training set, the evaluation will be performed on all the Train, Validation, and the Test sets using the Mean Squared Error. We do keep in mind however, that the predictions will be much better on the Train set because the model has already seen the data during Training.")
 
 
 
@@ -142,16 +146,16 @@ elif predictions_to_show == 'Train':
     if train_year != "All":
         train_plot_df_1 = train_plot_df[train_plot_df.Date.dt.year == int(train_year)]
 
-        from Plot_functions import train_plot_quarter
+        from Plot_functions import train_plot_quarter_with_year
 
-        train_plot_quarter(quarter_to_plot, train_plot_df_1)
+        train_plot_quarter_with_year(quarter_to_plot, train_plot_df_1, train_year)
 
 
 
     else:
-        from Plot_functions import train_plot_quarter
+        from Plot_functions import train_plot_quarter_no_year
 
-        train_plot_quarter(quarter_to_plot, train_plot_df)
+        train_plot_quarter_no_year(quarter_to_plot, train_plot_df)
 
 
 elif predictions_to_show == 'Validation':
@@ -159,7 +163,7 @@ elif predictions_to_show == 'Validation':
 
 
 # VALIDATION
-    from Plot_functions import validation_plot_quarter
+    from Plot_functions import validation_plot_quarter_with_year, validation_plot_quarter_no_year
 
     st.write("Now that we have evaluated the Train predictions, the validation sample will also be evaluated and it will give us a better understanding of how well the model performs in relation to the train predictions.")
 
@@ -180,12 +184,12 @@ elif predictions_to_show == 'Validation':
         val_plot_df_1 = val_plot_df[val_plot_df.Date.dt.year == int(val_year)]
         
 
-        validation_plot_quarter(quarter_to_plot, val_plot_df_1)
+        validation_plot_quarter_with_year(quarter_to_plot, val_plot_df_1, val_year)
 
 
 
     else:       
-        validation_plot_quarter(quarter_to_plot, val_plot_df)
+        validation_plot_quarter_no_year(quarter_to_plot, val_plot_df)
 
 
 else:
@@ -241,5 +245,5 @@ else:
 
     # Display the plot in Streamlit
     st.plotly_chart(fig, use_container_width = False)
-
+    
 
