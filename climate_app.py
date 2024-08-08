@@ -118,12 +118,15 @@ elif predictions_to_show == 'Validation':
 
     from Plot_functions import validation_plot_quarter_with_year, validation_plot_quarter_no_year
 
-    st.write("Now that we have evaluated the Train predictions, the validation sample will also be evaluated and it will give us a better understanding of how well the model performs in relation to the train predictions.")
+    st.write("Now that we have trained our model, we will make predictions on the validation sample and evaluate them.")
 
 
 
     st.write("The Mean Squared Error of the Validation predictions is  ", get_mse(temps_of_validation, val_preds['Predicted T (degC)']))
-   
+
+    mape_val = round(mean_absolute_percentage_error(temps_of_validation, val_preds['Predicted T (degC)']), 2)
+
+    st.write(f"The mean absolute percentage error is {mape_val}")
 
 
     #  Prepare the Validation data for plotting
@@ -151,7 +154,8 @@ else:
     st.write("Now to see our model performance on data it has not seen, we will evaluate the Test predictions against true Test values.")
     st.write("The Mean Squared Error of the Test predictions is  ", get_mse(temps_of_test, test_preds['Predicted T (degC)']))
 
-
+    mape_test = round(mean_absolute_percentage_error(temps_of_test, test_preds['Predicted T (degC)']), 2)
+    st.write(f"The mean absolute percentage error is {mape_test}")
 
     #  Prepare the Test data for plotting
     test_plot_df = pd.DataFrame({'True Temperature' : temps_of_test, 'Predicted Temperature' : test_preds['Predicted T (degC)'] })
