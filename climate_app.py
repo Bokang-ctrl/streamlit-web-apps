@@ -126,7 +126,7 @@ elif predictions_to_show == 'Validation':
 
     mape_val = round(mean_absolute_percentage_error(temps_of_validation, val_preds['Predicted T (degC)']), 2)
 
-    st.write(f"The mean absolute percentage error is {mape_val}")
+    st.write(f"This is a good model with a mean absolute percentage error of {mape_val}")
 
 
     #  Prepare the Validation data for plotting
@@ -155,7 +155,7 @@ else:
     st.write("The Mean Squared Error of the Test predictions is  ", get_mse(temps_of_test, test_preds['Predicted T (degC)']))
 
     mape_test = round(mean_absolute_percentage_error(temps_of_test, test_preds['Predicted T (degC)']), 2)
-    st.write(f"The mean absolute percentage error is {mape_test}")
+    st.write(f"The model performs good with a mean absolute percentage error of {mape_test}%. ")
 
     #  Prepare the Test data for plotting
     test_plot_df = pd.DataFrame({'True Temperature' : temps_of_test, 'Predicted Temperature' : test_preds['Predicted T (degC)'] })
