@@ -220,7 +220,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
             y = dataframe['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))
         
         
@@ -272,7 +272,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))      
         
         
@@ -321,7 +321,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))   
     
 
@@ -369,7 +369,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -417,7 +417,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -470,7 +470,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
             y = dataframe['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))
         
         
@@ -522,7 +522,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))      
         
         
@@ -571,7 +571,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))   
     
 
@@ -619,7 +619,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -667,7 +667,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -723,7 +723,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
             y = dataframe['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))
         
         
@@ -775,7 +775,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))      
         
         
@@ -824,7 +824,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))   
     
 
@@ -872,7 +872,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -920,7 +920,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -971,7 +971,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
             y = dataframe['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))
         
         
@@ -1023,7 +1023,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))      
         
         
@@ -1072,7 +1072,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         ))   
     
 
@@ -1120,7 +1120,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
@@ -1168,7 +1168,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
             y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
-            line=dict(color='red') 
+            line=dict(color='pink') 
         )) 
         
         
