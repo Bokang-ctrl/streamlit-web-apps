@@ -79,7 +79,7 @@ def get_mse(y_true, preds):
 
 st.sidebar.title("Filters")
 
-predictions_to_show = st.sidebar.selectbox('Predictions sample', ["None", "Validation", "Test"])
+predictions_to_show = st.sidebar.selectbox('Predictions sample', ["None", "Train", "Validation", "Test"])
 quarter_to_plot = st.sidebar.selectbox('Quarter', ['All', 'First', 'Second', 'Third', 'Fourth'])
 
 if predictions_to_show == 'None':
@@ -111,11 +111,58 @@ if predictions_to_show == 'None':
 
 
 
-# VALIDATION
+#------------------------------     OTHER PAGES      ----------------------------------
+
+                # ***       TRAIN PAGE
+
+elif predictions_to_show == 'Train':
+
+# filter by years for the plots
+    train_year = st.sidebar.selectbox('Year', ["All", "2009", "2010", "2011", "2012", "2013"])
+
+
+
+    
+    st.write("After training the model on the training set, the evaluation will be performed on all the Train, Validation, and the Test sets using the Mean Squared Error. We do keep in mind however, that the predictions will be much better on the Train set because the model has already seen the data during Training.")
+
+
+
+    st.write("The Mean Squared Error of the train predictions is  ", get_mse(temps_of_train, train_preds['Predicted T (degC)']))
+
+
+
+
+    st.write("\n \n")
+
+
+    # ------------------------------------------------------
+
+
+ 
+    #  Prepare the Train data for plotting
+    train_plot_df = pd.DataFrame({'True Temperature' : temps_of_train, 'Predicted Temperature' : train_preds['Predicted T (degC)'] })
+    train_plot_df['Date'] = pd.to_datetime(train_plot_df.index, format = 'mixed')
+
+    if train_year != "All":
+        train_plot_df_1 = train_plot_df[train_plot_df.Date.dt.year == int(train_year)]
+
+        from Plot_functions import train_plot_quarter_with_year
+
+        train_plot_quarter_with_year(quarter_to_plot, train_plot_df_1, train_year)
+
+
+
+    else:
+        from Plot_functions import train_plot_quarter_no_year
+
+        train_plot_quarter_no_year(quarter_to_plot, train_plot_df)
+
 
 elif predictions_to_show == 'Validation':
 
-    
+
+
+# VALIDATION
     from Plot_functions import validation_plot_quarter_with_year, validation_plot_quarter_no_year
 
     st.write("Now that we have evaluated the Train predictions, the validation sample will also be evaluated and it will give us a better understanding of how well the model performs in relation to the train predictions.")
