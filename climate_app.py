@@ -175,13 +175,13 @@ else:
         y=test_plot_df['Predicted Temperature'],
         mode='lines',
         name='Predicted Temperature',
-        line=dict(color='red')  
+        line=dict(color='orange')  
     ))
 
     # Set the layout
     fig.update_layout(
         title='Model Performance on Test sample',
-        xaxis_title='Datetime',
+        xaxis_title='Date',
         yaxis_title='T (degC)',
         legend_title_text='',
         font=dict(
