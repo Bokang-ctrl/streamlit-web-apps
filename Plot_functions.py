@@ -24,7 +24,7 @@ def all_samples_plot_quarter(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Average Temperature (2009 - 2017)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -63,7 +63,7 @@ def all_samples_plot_quarter(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Average Temperature (1st Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -101,7 +101,7 @@ def all_samples_plot_quarter(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Average Temperature (2nd Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -139,7 +139,7 @@ def all_samples_plot_quarter(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Average Temperature (3rd Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -176,7 +176,7 @@ def all_samples_plot_quarter(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Average Temperature (4th Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -228,7 +228,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
         # Set the layout
         fig.update_layout(
             title= f'Train predictions vs True Temperatures ({train_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -279,7 +279,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
         # Set the layout
         fig.update_layout(
             title= f'Train predictions vs True Temperatures (1st Quarter of {train_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -328,7 +328,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
         # Set the layout
         fig.update_layout(
             title= f'Train predictions vs True Temperatures (2nd Quarter of {train_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -377,7 +377,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
         # Set the layout
         fig.update_layout(
             title = f'Train predictions vs True Temperatures (3rd Quarter of {train_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -425,7 +425,7 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
         # Set the layout
         fig.update_layout(
             title= f'Train predictions vs True Temperatures (4th Quarter of {train_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -478,7 +478,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Train predictions vs True Temperatures',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -529,7 +529,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Train predictions vs True Temperatures (1st Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -578,7 +578,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Train predictions vs True Temperatures (2nd Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -627,7 +627,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Train predictions vs True Temperatures (3rd Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -675,7 +675,7 @@ def train_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Train predictions vs True Temperatures (4th Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -731,7 +731,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures ({val_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -782,7 +782,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures (1st Quarter of {val_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -831,7 +831,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures (2nd Quarter of {val_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -880,7 +880,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures (3rd Quarter of {val_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -928,7 +928,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures (4th Quarter of the {val_year})',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -979,7 +979,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -1030,7 +1030,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title= f'Validation predictions vs True Temperatures (1st Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -1079,7 +1079,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Validation predictions vs True Temperatures (2nd Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -1128,7 +1128,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Validation predictions vs True Temperatures (3rd Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
@@ -1176,7 +1176,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
         # Set the layout
         fig.update_layout(
             title='Validation predictions vs True Temperatures (4th Quarter of the sample)',
-            xaxis_title='Datetime',
+            xaxis_title='Date',
             yaxis_title='T (degC)',
             legend_title_text='',
             font=dict(
