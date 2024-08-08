@@ -86,9 +86,9 @@ if predictions_to_show == 'None':
 
     st.write("#### Hello world...    👋")
 
-    st.write("Welcome to my Time Series Analysis webpage. Here I demonstrate temperature forecasting with the LSTM model (Long Short-Term Memory), an example of a Recurrent Neural Network. The dataset used is the Jena Climate dataset provided by Kaggle.")
+    st.write("Welcome to my Time Series Analysis webpage. Here I will demonstrate temperature forecasting using the LSTM (Long Short-Term Memory) model, which is an example of a Recurrent Neural Network. The dataset used is the Jena Climate dataset provided by Kaggle.")
 
-    st.write("\nBelow is how the dataset looks like. It will be Analyzed and split into training, validation, & test samples. Afterwards, it will be preprocessed then the LSTM model will be trained on the data to finally make predictions.")
+    st.write("\nBelow, you can see the structure of the dataset. It will be split into training, validation, and test samples. The LSTM model will then be trained on the data to make predictions.")
 
 
 
