@@ -317,8 +317,8 @@ def train_plot_quarter_with_year(quarter, dataframe, train_year):
     
       # Plot the predicted temperature
         fig.add_trace(go.Scatter(
-            x = dataframe['Date'],
-            y = dataframe['Predicted Temperature'],
+            x = actual_quarter_df['Date'],
+            y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
             line=dict(color='red') 
@@ -567,8 +567,8 @@ def train_plot_quarter_no_year(quarter, dataframe):
     
       # Plot the predicted temperature
         fig.add_trace(go.Scatter(
-            x = dataframe['Date'],
-            y = dataframe['Predicted Temperature'],
+            x = actual_quarter_df['Date'],
+            y = actual_quarter_df['Predicted Temperature'],
             mode='lines',
             name='Predicted Temperature',
             line=dict(color='red') 
@@ -763,7 +763,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
         # Plot the data temperature
         fig.add_trace(go.Scatter(
             x = actual_quarter_df.index,
-            y = actual_quarter_df['True Temperature)'],
+            y = actual_quarter_df['True Temperature'],
             mode='lines',
             name='Temperature (degC)',
             line=dict(color='blue') 
@@ -830,7 +830,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
 
         # Set the layout
         fig.update_layout(
-            title='Validation predictions vs True Temperatures (2nd Quarter of {val_year})',
+            title= f'Validation predictions vs True Temperatures (2nd Quarter of {val_year})',
             xaxis_title='Datetime',
             yaxis_title='T (degC)',
             legend_title_text='',
@@ -879,7 +879,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
 
         # Set the layout
         fig.update_layout(
-            title='Validation predictions vs True Temperatures (3rd Quarter of {val_year})',
+            title= f'Validation predictions vs True Temperatures (3rd Quarter of {val_year})',
             xaxis_title='Datetime',
             yaxis_title='T (degC)',
             legend_title_text='',
@@ -927,7 +927,7 @@ def validation_plot_quarter_with_year(quarter, dataframe, val_year):
 
         # Set the layout
         fig.update_layout(
-            title='Validation predictions vs True Temperatures (4th Quarter of the {val_year})',
+            title= f'Validation predictions vs True Temperatures (4th Quarter of the {val_year})',
             xaxis_title='Datetime',
             yaxis_title='T (degC)',
             legend_title_text='',
@@ -1011,7 +1011,7 @@ def validation_plot_quarter_no_year(quarter, dataframe):
         # Plot the data temperature
         fig.add_trace(go.Scatter(
             x = actual_quarter_df.index,
-            y = actual_quarter_df['True Temperature)'],
+            y = actual_quarter_df['True Temperature'],
             mode='lines',
             name='Temperature (degC)',
             line=dict(color='blue') 

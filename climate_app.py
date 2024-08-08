@@ -138,7 +138,7 @@ elif predictions_to_show == 'Train':
     # ------------------------------------------------------
 
 
-
+ 
     #  Prepare the Train data for plotting
     train_plot_df = pd.DataFrame({'True Temperature' : temps_of_train, 'Predicted Temperature' : train_preds['Predicted T (degC)'] })
     train_plot_df['Date'] = pd.to_datetime(train_plot_df.index, format = 'mixed')
