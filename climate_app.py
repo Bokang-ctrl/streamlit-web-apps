@@ -126,7 +126,7 @@ elif predictions_to_show == 'Validation':
 
     mape_val = round(mean_absolute_percentage_error(temps_of_validation, val_preds['Predicted T (degC)']), 2)
 
-    st.write(f"This is a good model with a mean absolute percentage error of {mape_val}")
+    st.write(f"This is a good model with a mean absolute percentage error of {mape_val}%")
 
 
     #  Prepare the Validation data for plotting
