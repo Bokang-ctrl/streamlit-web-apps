@@ -6,7 +6,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error
 
 
 if 'data_loaded' not in st.session_state:
-    st.write("Initializing the app and loading data. Please wait, this will take just a minute.")
+    st.write("Initializing the app and loading data. Please wait, this won't take more than a minute :)")
 
 
 
