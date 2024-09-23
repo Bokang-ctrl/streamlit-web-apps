@@ -108,9 +108,9 @@ quarter_to_plot = st.sidebar.selectbox('Quarter', ['All', 'First', 'Second', 'Th
 
 
 if predictions_to_show == 'None':
-    st.write("#### Hello world...    👋")
+    st.write("#### Hello world.    👋")
 
-    st.write("Welcome to my Time Series Analysis webpage. Here I will demonstrate temperature forecasting using the LSTM (Long Short-Term Memory) model, which is an example of a Recurrent Neural Network. The dataset used is the Jena Climate dataset provided by Kaggle.")
+    st.write("Welcome to my Time Series Analysis webapp. Here I will demonstrate temperature forecasting using the LSTM (Long Short-Term Memory) model, which is an example of a Recurrent Neural Network. The dataset used is the Jena Climate dataset provided by Kaggle.")
 
     st.write("\nBelow, you can see the structure of the dataset. It will be split into training, validation, and test samples. The LSTM model will then be trained on the data to make predictions.")
 
