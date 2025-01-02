@@ -116,7 +116,7 @@ if predictions_to_show == 'None':
 
 
     st.write(data.head())
-    st.write(f'The shape of the data is {data.shape}')
+    st.write(f'The data has {len(data)} records and len(data.columns) columns.')
     st.write('\n')
 
 
